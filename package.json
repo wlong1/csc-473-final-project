@@ -1,0 +1,19 @@
+{
+  "name": "csc-473-final-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+	"start": "node server/server.js",
+	"server": "cd server && npx nodemon server.js",
+	"client": "npm start --prefix client",
+	"dev": "concurrently \"npm run server\" \"npm run client\"",
+	"install-all": "npm install && cd client && npm install && cd ../server && npm install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
