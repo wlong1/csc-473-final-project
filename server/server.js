@@ -32,19 +32,19 @@ app.use('/api/listing', listingRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-  
-    const errorResponse = {
-      status: 'error',
-      message: err.message || 'Internal Server Error'
-    };
-  
-    if (process.env.NODE_ENV === 'development') {
-      errorResponse.stack = err.stack;
-    }
-  
-    res.status(err.statusCode || 500).json(errorResponse);
-  });
+  console.error(err.stack);
+
+  const errorResponse = {
+    status: 'error',
+    message: err.message || 'Internal Server Error'
+  };
+
+  if (process.env.NODE_ENV === 'development') {
+    errorResponse.stack = err.stack;
+  }
+
+  res.status(err.statusCode || 500).json(errorResponse);
+});
   
 
 
