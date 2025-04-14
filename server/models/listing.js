@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(250),
             allowNull: false
         },
-        foundDate: {
+        lostDate: {
             type: DataTypes.DATE,
             allowNull: false
         }
