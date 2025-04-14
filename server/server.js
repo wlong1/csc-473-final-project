@@ -4,8 +4,8 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
-// Test
-const db = require('./models');
+const userRoutes = require('./routes/userRoutes');
+const listingRoutes = require('./routes/listingRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,13 +22,12 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100 // IP 100 requests limit
 });
-app.use('/api', limiter);
+app.use('/api', userRoutes);
 
 
 // Routes
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'API is working!' });
-});
+app.use('/api/auth', userRoutes);
+app.use('/api/listing', listingRoutes);
 
 
 // Error handling

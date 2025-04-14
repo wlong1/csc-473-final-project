@@ -6,13 +6,13 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true
         },
         userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'user',
-            key: 'id'
-        },
-        onDelete: 'CASCADE'
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'user',
+                key: 'id'
+                },
+            onDelete: 'CASCADE'
         },
         listingId: {
             type: DataTypes.INTEGER,
@@ -20,8 +20,13 @@ module.exports = (sequelize, DataTypes) => {
             references: {
                 model: 'listing',
                 key: 'id'
+            },
+            onDelete: 'CASCADE'
         },
-        onDelete: 'CASCADE'
+        status: {
+            type: DataTypes.ENUM('pending', 'accepted', 'rejected'),
+            defaultValue: 'pending',
+            allowNull: false
         }
         }, {
             tableName: 'claim',
