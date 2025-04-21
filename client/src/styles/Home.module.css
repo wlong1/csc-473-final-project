@@ -1,0 +1,33 @@
+.hero::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background:
+		linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url('/main-page.jpg') center/cover;
+	z-index: -1;
+}
+
+.content {
+	position: absolute;
+  top: 30%;
+	left: 10%;
+	margin: 0 auto;
+	padding: 20px;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.content h1 {
+	margin-bottom: 1rem;
+}
+
+.content p {
+	font-size: 1.2rem;
+	line-height: 1.6;
+}

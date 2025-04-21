@@ -1,0 +1,36 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	align-items: center;
+	padding: 1rem 2rem;
+	background-color: #242424;
+	color: rgba(255, 255, 255, 0.87);
+}
+  
+.title {
+	font-size: 1.8rem;
+	color: inherit;
+}
+
+.title:hover {
+	color: inherit;
+}
+  
+.nav {
+	display: flex;
+	gap: 1rem;
+}
+  
+.nav button {
+	padding: 0.5rem 1rem;
+	font-size: 18px;
+	border: none;
+	background: none;
+	transition: opacity 0.2s;
+}
+  
+.nav button:hover {
+	opacity: 0.7;
+}
+  

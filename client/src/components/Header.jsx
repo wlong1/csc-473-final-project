@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
+import styles from './Header.module.css';
 
 const AuthButtons = () => (
   <>
@@ -19,9 +21,13 @@ export default function Header() {
   const [isLoggedIn] = useState(false); // change later
 
   return (
-    <header>
-      <div>Site Title</div>
-      <nav>{isLoggedIn ? <UserButtons /> : <AuthButtons />}</nav>
+    <header className={styles.header}>
+      <Link href="/" className={styles.title}>
+        Lost and Found
+      </Link>
+      <nav className={styles.nav}>
+        {isLoggedIn ? <UserButtons /> : <AuthButtons />}
+      </nav>
     </header>
   );
-};
+}
