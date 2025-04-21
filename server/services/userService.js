@@ -39,12 +39,12 @@ const createUser = async (username, email, password) => {
     if (dupeUser || dupeEmail) {
       throw appError(409, 'Account already exists');
     }
-
+    
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
     const newUser = await User.create({
-        username,
-        email,
+        username: username,
+        email: email,
         password: hashedPassword,
     });
 

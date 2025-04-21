@@ -13,11 +13,11 @@ export default function Home() {
           <h1>Welcome to Lost and Found</h1>
           {isLoggedIn ? (
             <p>
-              Browse <Link href="/listing">listings</Link> or check your dashboard to manage your items.
+              Browse <Link to="/listing">listings</Link> or check your dashboard to manage your items.
             </p>
           ) : (
             <p>
-              Please <Link href="/login">login</Link> or <Link href="/register">register</Link> to check for lost items.
+              Please <Link to="/login">login</Link> or <Link to="/register">register</Link> to check for lost items.
             </p>
           )}
         </div>

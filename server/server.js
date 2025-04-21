@@ -22,6 +22,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100 // IP 100 requests limit
 });
+app.use('/api', limiter);
 app.use('/api', userRoutes);
 
 
@@ -45,7 +46,13 @@ app.use((err, req, res, next) => {
 
   res.status(err.statusCode || 500).json(errorResponse);
 });
-  
+
+// Test route
+app.get('/api/debug', (req, res) => {
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.send('RAW TEXT RESPONSE');
+});
+
 
 
 app.listen(PORT, () => {

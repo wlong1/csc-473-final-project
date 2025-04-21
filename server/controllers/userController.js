@@ -13,12 +13,12 @@ const loginUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res) => {
-    const { username, password, email} = req.body;
+    const { username, email, password} = req.body;
     if (!username || !password || !email) {
         throw appError(400, 'All fields are required');
     }
 
-    const user = await userService.createUser(username, password, email);
+    const user = await userService.createUser(username, email, password);
     res.status(201).json(user);
 };
 
