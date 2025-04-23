@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { isAuthenticated } from '../lib/auth';
 import styles from './Header.module.css';
 
 const AuthButtons = () => (
   <>
-    <button>Login</button>
-    <button>Register</button>
+    <Link to="/login">
+      <button>Login</button>
+    </Link>
+    <Link to="/register">
+      <button>Register</button>
+    </Link>
   </>
 );
 
@@ -18,7 +23,7 @@ const UserButtons = () => (
 );
 
 export default function Header() {
-  const [isLoggedIn] = useState(false); // change later
+  const [isLoggedIn] = useState(isAuthenticated());
 
   return (
     <header className={styles.header}>

@@ -1,18 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { register } from '../lib/api';
+import { login } from '../lib/api';
 import { setAuthToken } from '../lib/auth';
 
 import Layout from '../components/Layout';
 import styles from '../styles/Form.module.css';
 
-
-export default function Register() {
+export default function Login() {
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   });
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,23 +27,16 @@ export default function Register() {
     setError('');
     setIsSubmitting(true);
 
-    if (formData.password !== formData.confirmPassword) {
-      setIsSubmitting(false);
-      return setError('Passwords do not match');
-    }
-
     try {
-      const { token, role } = await register({
+      const { token, role } = await login({
         username: formData.username,
-        email: formData.email,
         password: formData.password
       });
-      console.log('Registered!', token);
       setAuthToken(token, role);
-      navigate('/listing'); // OK, redirect
+      navigate('/listing');
     } catch (err) {
-      console.error('Registration failed:', err);
-      setError(err.message || 'Registration failed');
+      console.error('Login failed:', err);
+      setError(err.message || 'Login failed');
     } finally {
       setIsSubmitting(false);
     }
@@ -56,7 +46,7 @@ export default function Register() {
     <Layout>
       <div className={styles.content}>
         <div className={styles.formContainer}>
-          <h1>Create Account</h1>
+          <h1>Login</h1>
           {error && (
             <div
               className={styles.error}
@@ -81,18 +71,6 @@ export default function Register() {
               />
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                aria-invalid={error.includes('email') ? 'true' : 'false'}
-              />
-            </div>
-            <div className={styles.formGroup}>
               <label htmlFor="password">Password</label>
               <input
                 type="password"
@@ -101,20 +79,7 @@ export default function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                minLength="6"
                 aria-invalid={error.includes('password') ? 'true' : 'false'}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-                aria-invalid={error.includes('Passwords do not match') ? 'true' : 'false'}
               />
             </div>
             <button
@@ -123,7 +88,7 @@ export default function Register() {
               disabled={isSubmitting}
               aria-busy={isSubmitting}
             >
-              {isSubmitting ? 'Processing...' : 'Register'}
+              {isSubmitting ? 'Processing...' : 'Login'}
             </button>
           </form>
         </div>

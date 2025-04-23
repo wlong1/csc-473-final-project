@@ -1,10 +1,11 @@
-import Layout from '../components/Layout';
-import styles from '../styles/Home.module.css';
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { isAuthenticated } from '../lib/auth';
+import Layout from '../components/Layout';
+import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  const [isLoggedIn] = useState(false);  // replace later
+  const [isLoggedIn] = useState(isAuthenticated());
 
   return (
     <Layout>
@@ -13,7 +14,7 @@ export default function Home() {
           <h1>Welcome to Lost and Found</h1>
           {isLoggedIn ? (
             <p>
-              Browse <Link to="/listing">listings</Link> or check your dashboard to manage your items.
+              Browse <Link to="/listing">listings</Link> or check your <Link to="/daskboard">dashboard</Link> to manage your items.
             </p>
           ) : (
             <p>

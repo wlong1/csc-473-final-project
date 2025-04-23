@@ -11,19 +11,22 @@
   background-repeat: no-repeat, repeat;
   background-size: cover, auto;
   z-index: -1;
+  min-height: 80vh;
 }
 
 .content {
-  position: relative;
+  flex: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
+  min-height: 100%;
 }
 
 .formContainer {
   max-width: 400px;
   margin: auto;
-  padding: 2rem;
+  padding: 1.5rem;
   background: rgba(36, 36, 36, 0.7);
   color: rgba(255, 255, 255, 0.9);
   border-radius: 6px;

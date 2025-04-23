@@ -15,3 +15,19 @@ export async function register(data) {
 
   return body;
 }
+
+export async function login(data) {
+  const res = await fetch(`${API_URL}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Login failed');
+  }
+
+  return body;
+}

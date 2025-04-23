@@ -8,8 +8,8 @@ const loginUser = async (req, res, next) => {
         throw appError(400, 'All fields are required');
     }
     
-    const user = await userService.loginUser(username, password);
-    res.status(200).json(user);
+    const { token, role } = await userService.loginUser(username, password);
+    res.status(200).json({ token, role });
 };
 
 const createUser = async (req, res) => {
@@ -18,8 +18,8 @@ const createUser = async (req, res) => {
         throw appError(400, 'All fields are required');
     }
 
-    const user = await userService.createUser(username, email, password);
-    res.status(201).json(user);
+    const { token, role } = await userService.createUser(username, email, password);
+    res.status(201).json({ token, role });
 };
 
 module.exports = {

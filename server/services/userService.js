@@ -29,7 +29,7 @@ const loginUser = async (username, password) => {
         throw appError(401, 'Invalid credentials');
     }
 
-    return generateToken(user);
+    return { token: generateToken(user), role: user.role };
 }
 
 
@@ -48,7 +48,7 @@ const createUser = async (username, email, password) => {
         password: hashedPassword,
     });
 
-    return generateToken(newUser);
+    return { token: generateToken(newUser), role: newUser.role};
 }
 
 
