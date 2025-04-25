@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         lostDate: {
             type: DataTypes.DATE,
             allowNull: false
+        },
+        imagePath: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
         }, {
             tableName: 'listing',

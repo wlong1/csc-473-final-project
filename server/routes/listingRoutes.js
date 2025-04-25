@@ -3,6 +3,7 @@ const router = express.Router();
 const listingController = require('../controllers/listingController');
 const claimController = require('../controllers/claimController');
 const { authMiddleware, authRoles } = require('../middleware/auth');
+const { upload } = require('../config/upload');
 
 // Listings
 router.get('/', authMiddleware, listingController.getAllListing);
@@ -11,6 +12,7 @@ router.get('/:listingId', authMiddleware, listingController.getListing);
 router.post('/',
     authMiddleware,
     authRoles('admin'),
+    upload.single('image'),
     listingController.createListing);
 router.put('/:listingId',
     authMiddleware,

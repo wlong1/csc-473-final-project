@@ -16,14 +16,16 @@ const getListing = async (listingId) => {
     return listing;
 };
 
-const createListing = async (title, description, lostDate) => {
+const createListing = async (title, description, lostDate, imagePath) => {
     const newListing = await Listing.create({
         title,
         description,
-        lostDate
+        lostDate,
+        imagePath
     });
     return newListing;
 };
+
 
 const updateListing = async (listingId, title, description, lostDate) => {
     const listing = await Listing.findByPk(listingId);

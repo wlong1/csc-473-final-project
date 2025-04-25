@@ -19,11 +19,18 @@ const getListing = async (req, res) => {
 
 const createListing = async (req, res) => {
     const { title, description, lostDate } = req.body;
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+
     if (!title || !description || !lostDate) {
         throw appError(400, 'All fields are required');
     }
 
-    const listing = await listingService.createListing(title, description, lostDate);
+    const listing = await listingService.createListing(
+      title,
+      description,
+      lostDate,
+      imagePath
+    );
     res.status(201).json(listing);
 };
 

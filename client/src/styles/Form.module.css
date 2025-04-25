@@ -11,7 +11,7 @@
   background-repeat: no-repeat, repeat;
   background-size: cover, auto;
   z-index: -1;
-  min-height: 80vh;
+  min-height: 90vh;
 }
 
 .content {
@@ -54,6 +54,16 @@
   border-radius: 4px;
 }
 
+.formGroup textarea {
+  width: 100%;
+  padding: 0.5rem;
+  min-height: 40px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
 .error {
   color: #d32f2f;
   margin-bottom: 1rem;
@@ -82,6 +92,13 @@
 .submitButton:disabled {
   background-color: #b9bcbe;
   cursor: not-allowed;
+}
+
+.charCount {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: right;
+  margin-top: 0.25rem;
 }
 
 [aria-invalid="true"] {

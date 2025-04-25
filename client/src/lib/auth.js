@@ -1,5 +1,5 @@
-const TOKEN_KEY = 'lost-and-found-token';
-const USER_ROLE = 'user-role';
+const TOKEN_KEY = 'token';
+const USER_ROLE = 'role';
 
 export const setAuthToken = (token, role) => {
   localStorage.setItem(TOKEN_KEY, token);
@@ -18,6 +18,14 @@ export const clearAuthToken = () => {
   localStorage.removeItem(TOKEN_KEY);
 };
 
+export const clearRole = () => {
+  localStorage.removeItem(USER_ROLE);
+};
+
 export const isAuthenticated = () => {
   return !!getAuthToken();
+};
+
+export const checkAuthStatus = async () => {
+  return await verifyToken();
 };
