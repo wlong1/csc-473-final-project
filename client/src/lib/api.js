@@ -108,3 +108,78 @@ export async function getListing(listingId) {
 
   return body;
 }
+
+export async function getListingClaim(listingId) {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing/${listingId}/claim`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Failed to fetch claims');
+  }
+
+  return body;
+}
+
+export async function createClaim(listingId, message) {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing/${listingId}/claim`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message })
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Failed to create claim');
+  }
+
+  return body;
+}
+
+export async function updateClaim(claimId, message) {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing/claim/${claimId}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message })
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Failed to update claim');
+  }
+
+  return body;
+}
+
+export async function deleteClaim(claimId) {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing/claim/${claimId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Failed to delete claim');
+  }
+
+  return body;
+}

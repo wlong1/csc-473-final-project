@@ -72,7 +72,6 @@ export default function Listing() {
 							key={listing.id}
 							className={`${styles.listingContainer} ${styles.listingCard}`}
 							onClick={() => handleListingClick(listing.id)}
-							style={{ cursor: 'pointer' }}
 						>
 							<div className={styles.imageSection}>
 								{listing.imageUrl && (

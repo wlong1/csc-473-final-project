@@ -21,18 +21,21 @@ router.put('/:listingId',
 
 
 // Claims
-router.get('/:listingId/claims',
+router.get('/claim',
     authMiddleware,
-    claimController.getClaims);
-router.post('/:listingId/claims',
+    claimController.getUserClaim);
+router.get('/:listingId/claim',
+    authMiddleware,
+    claimController.getListingClaim);
+router.post('/:listingId/claim',
     authMiddleware, 
     authRoles('user'),
     claimController.createClaim);
-router.put('/:listingId/claims/:claimId',
+router.put('/claim/:claimId',
     authMiddleware, 
     authRoles('user'),
     claimController.updateClaim);
-router.delete('/:listingId/claims/:claimId',
+router.delete('/claim/:claimId',
     authMiddleware,
     claimController.deleteClaim);
 

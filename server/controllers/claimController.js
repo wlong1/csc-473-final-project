@@ -2,12 +2,21 @@ const claimController = require('../services/claimService');
 const { appError } = require('../utils/httpError');
 
 
-const getClaims = async (req, res, next) => {
+const getUserClaim = async (req, res, next) => {
+    const userId = req.user.id;
+    if (!userId) {
+        throw appError(400, 'Missing user id');
+    }
+    const claims = await claimController.getUserClaim(userId);
+    res.status(200).json(claims);
+};
+
+const getListingClaim = async (req, res, next) => {
     const listingId = req.params.listingId;
     if (!listingId) {
         throw appError(400, 'Missing param id');
     }
-    const claims = await claimController.getClaims(listingId);
+    const claims = await claimController.getListingClaim(listingId);
     res.status(200).json(claims);
 };
 
@@ -21,8 +30,13 @@ const createClaim = async (req, res) => {
     if (!message) {
         throw appError(400, 'Message required');
     }
-
-    const claim = await claimController.createClaim(listingId, message);
+    console.log(req.user);
+    const userId = req.user.id;
+    if (!message) {
+        throw appError(400, 'Missing userId');
+    }
+    
+    const claim = await claimController.createClaim(userId, listingId, message);
     res.status(201).json(claim);
 };
 
@@ -53,7 +67,8 @@ const deleteClaim = async (req, res) => {
 };
 
 module.exports = {
-    getClaims,
+    getUserClaim,
+    getListingClaim,
     createClaim,
     updateClaim,
     deleteClaim

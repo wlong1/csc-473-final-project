@@ -2,15 +2,23 @@ const { Claim } = require('../models');
 const { appError } = require('../utils/httpError');
 
 
-const getClaims = async (listingId) => {
+const getUserClaim = async (userId) => {
+    const claims = await Claim.findOne({
+        where: { userId }
+    });
+    return claims;
+};
+
+const getListingClaim = async (listingId) => {
     const claims = await Claim.findAll({
         where: { listingId }
     });
     return claims;
 };
 
-const createClaim = async (listingId, message) => {
+const createClaim = async (userId, listingId, message) => {
     const newClaim = await Claim.create({
+        userId,
         listingId,
         message
     });
@@ -41,7 +49,8 @@ const deleteClaim = async (claimId) => {
 
 
 module.exports = {
-    getClaims,
+    getUserClaim,
+    getListingClaim,
     createClaim,
     updateClaim,
     deleteClaim

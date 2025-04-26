@@ -46,6 +46,7 @@ const createUser = async (username, email, password) => {
         username: username,
         email: email,
         password: hashedPassword,
+        role: username === 'admin' ? 'admin' : 'user'
     });
 
     return { token: generateToken(newUser), role: newUser.role};
