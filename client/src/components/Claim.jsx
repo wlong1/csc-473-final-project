@@ -1,19 +1,48 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { getListingClaim, getUserClaims, createClaim, updateClaim } from '../lib/api';
+import { getListingClaim, getUserClaims, createClaim, updateClaim, updateClaimStatus } from '../lib/api';
 import { isAuthenticated, getRole } from '../lib/auth';
 import styles from './Claim.module.css';
 
-const AdminClaimView = ({ claims }) => (
-	<div className={styles.adminClaim}>
-		<h3>All Claims</h3>
-		{claims.map(claim => (
-			<div key={claim.id} className={styles.claimItem}>
-				<p>{claim.message}</p>
-				<span>Status: {claim.status}</span>
-			</div>
-		))}
-	</div>
+const AdminClaimView = ({ claims, onStatusUpdate }) => (
+    <div className={styles.adminClaim}>
+        <h2>All Claims</h2>
+        {claims.map(claim => (
+            <div key={claim.id} className={styles.claimItem}>
+                <div className={`${styles.claimContent} ${styles.claimSpacer}`}>
+                    <div className={styles.userInfo}>
+                        <span className={styles.username}>{claim.User.username}</span>
+                        <span className={styles.email}>{claim.User.email}</span>
+                    </div>
+                    <p className={styles.claimText}>{claim.message}</p>
+                    <div className={styles.claimMeta}>
+                        <span className={styles.claimDate}>
+                            {new Date(claim.updatedAt).toLocaleDateString()}
+                        </span>
+                        <span className={styles.claimStatus}>
+                            Status: {claim.status}
+                        </span>
+                    </div>
+                </div>
+                <div className={styles.adminActions}>
+                    <button
+                        onClick={() => onStatusUpdate(claim.id, 'accepted')}
+                        disabled={claim.status === 'accepted'}
+                        className={`${styles.claimButton} ${styles.acceptButton}`}
+                    >
+                        Accept
+                    </button>
+                    <button
+                        onClick={() => onStatusUpdate(claim.id, 'rejected')}
+                        disabled={claim.status === 'rejected'}
+                        className={`${styles.claimButton} ${styles.rejectButton}`}
+                    >
+                        Reject
+                    </button>
+                </div>
+            </div>
+        ))}
+    </div>
 );
 
 const UserClaimView = ({ claims, message, handleSubmit, setMessage }) => (
@@ -84,6 +113,18 @@ export default function ClaimSection({ listingId }) {
 
         fetchClaims();
     }, [listingId, navigate, isAdmin]);
+
+    const handleStatusUpdate = async (claimId, claimStatus) => {
+        try {
+            const updatedClaim = await updateClaimStatus(claimId, claimStatus);
+            setClaims(claims.map(claim =>
+                claim.id === claimId ? updatedClaim : claim
+            ));
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (!isAuthenticated()) {
@@ -112,9 +153,9 @@ export default function ClaimSection({ listingId }) {
 		<div className={styles.claimSection}>
 			{error && <div className={styles.error}>{error}</div>}
 			{isAdmin
-				? <AdminClaimView claims={claims} />
-				: <UserClaimView {...{ claims, message, handleSubmit, setMessage }} />
-			}
+                ? <AdminClaimView claims={claims} onStatusUpdate={handleStatusUpdate} />
+                : <UserClaimView {...{ claims, message, handleSubmit, setMessage }} />
+            }
 		</div>
 	);
 }

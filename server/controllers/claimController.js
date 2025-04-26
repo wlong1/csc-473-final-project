@@ -40,10 +40,10 @@ const createClaim = async (req, res) => {
     res.status(201).json(claim);
 };
 
-const updateClaim = async (req, res) => {
+const updateClaimMessage = async (req, res) => {
     const claimId = req.params.claimId;
     if (!claimId) {
-        throw appError(400, 'Missing param id');
+        throw appError(400, 'Missing claim id');
     }
 
     const { message } = req.body;
@@ -51,7 +51,22 @@ const updateClaim = async (req, res) => {
         throw appError(400, 'Message required');
     }
 
-    const claim = await claimController.updateClaim(claimId, message);
+    const claim = await claimController.updateClaimMessage(claimId, message);
+    res.status(200).json(claim);
+};
+
+const updateClaimStatus = async (req, res) => {
+    const claimId = req.params.claimId;
+    if (!claimId) {
+        throw appError(400, 'Missing claim id');
+    }
+
+    const { claimStatus } = req.body;
+    if (!claimStatus || (claimStatus !== 'accepted' && claimStatus !== 'rejected')) {
+        throw appError(400, 'Invalid status');
+    }
+
+    const claim = await claimController.updateClaimStatus(claimId, claimStatus);
     res.status(200).json(claim);
 };
 
@@ -70,6 +85,7 @@ module.exports = {
     getUserClaim,
     getListingClaim,
     createClaim,
-    updateClaim,
+    updateClaimMessage,
+    updateClaimStatus,
     deleteClaim
 };

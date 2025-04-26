@@ -26,12 +26,18 @@ router.post('/:listingId/claim',
 router.put('/claim/:claimId',
     authMiddleware,
     authRoles('user'),
-    claimController.updateClaim
+    claimController.updateClaimMessage
 );
 
 router.delete('/claim/:claimId',
     authMiddleware,
     claimController.deleteClaim
+);
+
+router.put('/claim/:claimId/claimStatus',
+    authMiddleware,
+    authRoles('admin'),
+    claimController.updateClaimStatus
 );
 
 

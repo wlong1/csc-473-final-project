@@ -116,7 +116,6 @@ export async function getUserClaims() {
       'Authorization': `Bearer ${token}`
     }
   });
-  console.log("THIS IS BEING TRIGGERED");
   const body = await res.json();
   if (!res.ok) throw new Error(body.message || 'Failed to fetch user claims');
   return body;
@@ -174,6 +173,26 @@ export async function updateClaim(claimId, message) {
 
   if (!res.ok) {
     throw new Error(body.message || 'Failed to update claim');
+  }
+
+  return body;
+}
+
+export async function updateClaimStatus(claimId, claimStatus) {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing/claim/${claimId}/claimStatus`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ claimStatus })
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Failed to update claim status');
   }
 
   return body;

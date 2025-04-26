@@ -34,7 +34,7 @@ export default function Header() {
     clearAuthToken();
     clearRole();
     setIsLoggedIn(false);
-    navigate('/');
+    navigate('/login');
   };
 
   return (

@@ -1,4 +1,4 @@
-const { Claim } = require('../models');
+const { Claim, User } = require('../models');
 const { appError } = require('../utils/httpError');
 
 
@@ -11,7 +11,11 @@ const getUserClaim = async (userId) => {
 
 const getListingClaim = async (listingId) => {
     const claims = await Claim.findAll({
-        where: { listingId }
+        where: { listingId },
+        include: [{
+            model: User,
+            attributes: ['username', 'email']
+        }]
     });
     return claims;
 };
@@ -25,7 +29,7 @@ const createClaim = async (userId, listingId, message) => {
     return newClaim;
 };
 
-const updateClaim = async (claimId, message) => {
+const updateClaimMessage = async (claimId, message) => {
     const claim = await Claim.findByPk(claimId);
     if (!claim) {
         throw appError(404, 'Claim not found');
@@ -34,6 +38,24 @@ const updateClaim = async (claimId, message) => {
     claim.message = message;
 
     await claim.save();
+    return claim;
+};
+
+const updateClaimStatus = async (claimId, status) => {
+    const claim = await Claim.findByPk(claimId, {
+        include: [{
+            model: User,
+            attributes: ['username', 'email']
+        }]
+    });
+
+    if (!claim) {
+        throw appError(404, 'Claim not found');
+    }
+
+    claim.status = status;
+    await claim.save();
+
     return claim;
 };
 
@@ -52,6 +74,7 @@ module.exports = {
     getUserClaim,
     getListingClaim,
     createClaim,
-    updateClaim,
+    updateClaimMessage,
+    updateClaimStatus,
     deleteClaim
 };

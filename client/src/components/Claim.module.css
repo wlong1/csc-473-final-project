@@ -9,14 +9,6 @@
 	border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.claimItem {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    background: rgba(50, 50, 50, 0.5);
-    border-radius: 4px;
-    border-left: 3px solid #537496;
-}
-
 .currentClaim {
     margin-bottom: 2rem;
     padding: 1rem;
@@ -24,10 +16,18 @@
     border-radius: 6px;
 }
 
+.claimItem {
+    margin-bottom: 30px;
+}
+
 h3 {
     font-size: 20px;
     margin-bottom: 1rem;
     color: rgba(255, 255, 255, 0.9);
+}
+
+h2 {
+    margin-bottom: 1.5rem;
 }
 
 .claimForm {
@@ -37,6 +37,11 @@ h3 {
 
 .claimContent {
     margin-bottom: 0.5rem;
+}
+
+.claimSpacer {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1em;
 }
 
 .claimContent p {
@@ -82,15 +87,50 @@ textarea {
     border-radius: 4px;
 }
 
-
-.claimItem[data-status="pending"] {
-    border-left-color: #ff9800;
+.userInfo {
+    margin-bottom: 0.5rem;
 }
 
-.claimItem[data-status="accepted"] {
-    border-left-color: #4caf50;
+.username {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-right: 1rem;
 }
 
-.claimItem[data-status="rejected"] {
-    border-left-color: #d32f2f;
+.email {
+    color: #b4b4b4;
+    font-size: 0.9rem;
+}
+
+.adminActions {
+    display: flex;
+    gap: 0.7rem;
+    margin-top: 0.7rem;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.acceptButton {
+    background-color: #63806e;
+}
+
+.rejectButton {
+    background-color: #a7958b;
+    margin: 0;
+}
+
+.acceptButton:not(:disabled):hover {
+    background-color: #4a5e52;
+}
+
+.rejectButton:not(:disabled):hover {
+    background-color: #8a7b72;
+}
+
+.acceptButton:disabled,
+.rejectButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #cccccc;
+    color: #000000;
 }
