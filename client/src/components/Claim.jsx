@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { getListingClaim, createClaim, updateClaim } from '../lib/api';
+import { getListingClaim, getUserClaims, createClaim, updateClaim } from '../lib/api';
 import { isAuthenticated, getRole } from '../lib/auth';
 import styles from './Claim.module.css';
 
@@ -57,27 +57,33 @@ export default function ClaimSection({ listingId }) {
 	const isAdmin = role === 'admin';
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (!isAuthenticated()) {
-			navigate('/login');
-			return;
-		}
+    useEffect(() => {
+        if (!isAuthenticated()) {
+            navigate('/login');
+            return;
+        }
 
-		const fetchClaims = async () => {
-			try {
-				const data = await getListingClaim(listingId);
-				setClaims(data);
+        const fetchClaims = async () => {
+            try {
+                let data;
+                if (isAdmin) {
+                    data = await getListingClaim(listingId);
+                } else {
+                    data = await getUserClaims();
+                    data = data.filter(claim => claim.listingId === parseInt(listingId));
+                }
 
-				if (!isAdmin && data.length > 0) {
-					setMessage(data[0].message);
-				}
-			} catch (err) {
-				setError(err.message);
-			}
-		};
-		fetchClaims();
-	}, [listingId, navigate, isAdmin]);
+                setClaims(data);
+                if (!isAdmin && data.length > 0) {
+                    setMessage(data[0].message);
+                }
+            } catch (err) {
+                setError(err.message);
+            }
+        };
 
+        fetchClaims();
+    }, [listingId, navigate, isAdmin]);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (!isAuthenticated()) {

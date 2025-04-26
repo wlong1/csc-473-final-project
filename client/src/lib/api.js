@@ -109,6 +109,19 @@ export async function getListing(listingId) {
   return body;
 }
 
+export async function getUserClaims() {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing/claim`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  console.log("THIS IS BEING TRIGGERED");
+  const body = await res.json();
+  if (!res.ok) throw new Error(body.message || 'Failed to fetch user claims');
+  return body;
+}
+
 export async function getListingClaim(listingId) {
   const token = getAuthToken();
   const res = await fetch(`${API_URL}/api/listing/${listingId}/claim`, {
@@ -118,7 +131,7 @@ export async function getListingClaim(listingId) {
   });
 
   const body = await res.json();
-
+  
   if (!res.ok) {
     throw new Error(body.message || 'Failed to fetch claims');
   }

@@ -12,7 +12,7 @@ const getListing = async (req, res) => {
     if (!listingId) {
         throw appError(400, 'Missing param id');
     }
-
+    console.log("THIS IS ALSO BEING TRIGGERED, WHYYYYY");
     const listing = await listingService.getListing(listingId);
     res.status(200).json(listing);
 };

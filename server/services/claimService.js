@@ -3,7 +3,7 @@ const { appError } = require('../utils/httpError');
 
 
 const getUserClaim = async (userId) => {
-    const claims = await Claim.findOne({
+    const claims = await Claim.findAll({
         where: { userId }
     });
     return claims;
