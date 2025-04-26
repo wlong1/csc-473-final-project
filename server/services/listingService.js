@@ -8,7 +8,6 @@ const getAllListing = async () => {
 };
 
 const getListing = async (listingId) => {
-
     const listing = await Listing.findByPk(listingId);
     if (!listing) {
         throw appError(404, 'Listing not found');

@@ -65,3 +65,46 @@ export async function createListing(data) {
 
   return body;
 }
+
+export async function getAllListings() {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing`, {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+      throw new Error(body.message || 'Failed to fetch listings');
+  }
+
+  return body.map(listing => ({
+      ...listing,
+      imageUrl: listing.imagePath
+          ? `${API_URL}/public/uploads/${listing.imagePath}`
+          : null
+  }));
+}
+
+export async function getListing(listingId) {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing/${listingId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Failed to fetch listing');
+  }
+
+  if (body.imagePath) {
+    body.imageUrl = `${API_URL}/public/uploads/${body.imagePath}`;
+  }
+
+  return body;
+}

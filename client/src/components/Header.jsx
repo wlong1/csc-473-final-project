@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
-import { isAuthenticated } from '../lib/auth';
+import { Link, useNavigate } from 'react-router';
+import { isAuthenticated, clearAuthToken, clearRole } from '../lib/auth';
 import styles from './Header.module.css';
 
 const AuthButtons = () => (
@@ -14,16 +14,28 @@ const AuthButtons = () => (
   </>
 );
 
-const UserButtons = () => (
+const UserButtons = ({ onLogout }) => (
   <>
-    <button>Listing</button>
-    <button>Dashboard</button>
-    <button>Logout</button>
+    <Link to="/listing">
+      <button>Listing</button>
+    </Link>
+    <Link to="/dashboard">
+      <button>Dashboard</button>
+    </Link>
+    <button onClick={onLogout}>Logout</button>
   </>
 );
 
 export default function Header() {
-  const [isLoggedIn] = useState(isAuthenticated());
+  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    clearAuthToken();
+    clearRole();
+    setIsLoggedIn(false);
+    navigate('/');
+  };
 
   return (
     <header className={styles.header}>
@@ -31,7 +43,7 @@ export default function Header() {
         Lost and Found
       </Link>
       <nav className={styles.nav}>
-        {isLoggedIn ? <UserButtons /> : <AuthButtons />}
+        {isLoggedIn ? <UserButtons onLogout={handleLogout} /> : <AuthButtons />}
       </nav>
     </header>
   );

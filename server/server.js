@@ -29,9 +29,13 @@ app.use('/api', userRoutes);
 
 
 // Routes
-app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/api/auth', userRoutes);
 app.use('/api/listing', listingRoutes);
+app.use('/public', express.static(path.join(__dirname, 'public'), {
+  setHeaders: (res) => {
+    res.set('Cross-Origin-Resource-Policy', 'cross-origin');
+  }
+}));
 
 // Error handling
 app.use((err, req, res, next) => {
