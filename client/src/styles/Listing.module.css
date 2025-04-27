@@ -115,10 +115,16 @@
   border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.activeStatus {
+.statusActive {
   color: rgba(199, 211, 236, 1.0);;
   margin-left: auto;
 }
+
+.statusInactive {
+  color: rgb(236, 199, 199);;
+  margin-left: auto;
+}
+
 
 @media (max-width: 768px) {
   .listingContainer {

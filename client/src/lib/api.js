@@ -109,6 +109,25 @@ export async function getListing(listingId) {
   return body;
 }
 
+export async function updateListing(listingId, { title, description, lostDate, active }) {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing/${listingId}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ title, description, lostDate, active })
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Failed to update listing');
+  }
+  return body;
+}
+
 export async function getUserClaims() {
   const token = getAuthToken();
   const res = await fetch(`${API_URL}/api/listing/claim`, {
@@ -215,3 +234,6 @@ export async function deleteClaim(claimId) {
 
   return body;
 }
+
+
+

@@ -39,12 +39,17 @@ const updateListing = async (req, res) => {
         throw appError(400, 'Missing param id');
     }
 
-    const { title, description, lostDate } = req.body;
-    if (!title || !description || !lostDate) {
+    const { title, description, lostDate, active} = req.body;
+    if (!title || !description || !lostDate || active == undefined) {
         throw appError(400, 'All fields are required');
     }
 
-    const listing = await listingService.updateListing(listingId, title, description, lostDate);
+    const listing = await listingService.updateListing(
+        listingId, 
+        title,
+        description,
+        lostDate,
+        active);
     res.status(200).json(listing);
 };
 

@@ -5,7 +5,7 @@ import checkToken from '../hooks/checkToken';
 import Layout from '../components/Layout';
 import styles from '../styles/Form.module.css';
 
-export default function CreateListing() {
+export default function ListingCreate() {
 	checkToken();
 
   const [formData, setFormData] = useState({

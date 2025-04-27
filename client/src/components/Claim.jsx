@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { getListingClaim, getUserClaims, createClaim, updateClaim, updateClaimStatus } from '../lib/api';
 import { isAuthenticated, getRole } from '../lib/auth';
 import styles from './Claim.module.css';
@@ -149,14 +149,25 @@ export default function ClaimSection({ listingId }) {
 		return null;
 	}
 
-	return (
-		<div className={styles.claimSection}>
-			{error && <div className={styles.error}>{error}</div>}
-			{isAdmin
-                ? <AdminClaimView claims={claims} onStatusUpdate={handleStatusUpdate} />
-                : <UserClaimView {...{ claims, message, handleSubmit, setMessage }} />
-            }
-		</div>
-	);
+    return (
+        <>
+            {isAdmin && (
+                <Link
+                    to={`/listing/${listingId}/edit`}
+                    className={styles.adminEditButton}
+                >
+                    Edit Listing
+                </Link>
+            )}
+            <div className={styles.claimSection}>
+                {error && <div className={styles.error}>{error}</div>}
+                {isAdmin
+                    ? <AdminClaimView claims={claims} onStatusUpdate={handleStatusUpdate} />
+                    : <UserClaimView {...{ claims, message, handleSubmit, setMessage }} />
+                }
+            </div>
+        </>
+    );
+    
 }
 

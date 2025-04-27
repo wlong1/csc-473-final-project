@@ -89,9 +89,11 @@ export default function Listing() {
 									<div className={styles.lostDate}>
 										Lost on: {new Date(listing.lostDate).toLocaleDateString()}
 									</div>
-									<div className={styles.activeStatus}>
-										{listing.active ? 'Active' : 'Inactive'}
-									</div>
+                  <div className={`${styles.activeStatus} ${
+                    listing.active ? styles.statusActive : styles.statusInactive
+                    }`}>
+                    {listing.active ? 'Active' : 'Inactive'}
+                  </div>
 								</div>
 							</div>
 						</div>

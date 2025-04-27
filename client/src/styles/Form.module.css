@@ -25,11 +25,16 @@
 
 .formContainer {
   max-width: 400px;
+  width: 50%;
   margin: auto;
   padding: 1.5rem;
   background: rgba(36, 36, 36, 0.7);
   color: rgba(255, 255, 255, 0.9);
   border-radius: 6px;
+}
+
+.formContainer form {
+  padding: 0 20px;
 }
 
 .formContainer h1 {
@@ -49,6 +54,48 @@
 
 .formGroup textarea {
   min-height: 40px;
+  margin-bottom: 0;
+}
+
+.toggleContainer {
+  display: flex;
+  margin-top:1.5rem;
+}
+
+.toggleLabel {
+  margin-left:auto;
+  padding: 0 10px;
+}
+
+
+.toggleButton {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: #ccc;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.toggleButton.active {
+  background-color: #75af77;
+}
+
+.toggleSwitch {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.2s;
+}
+
+.toggleButton.active .toggleSwitch {
+  transform: translateX(26px);
 }
 
 .submitButton {

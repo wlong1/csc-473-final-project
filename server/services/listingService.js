@@ -26,7 +26,7 @@ const createListing = async (title, description, lostDate, imagePath) => {
 };
 
 
-const updateListing = async (listingId, title, description, lostDate) => {
+const updateListing = async (listingId, title, description, lostDate, active) => {
     const listing = await Listing.findByPk(listingId);
     if (!listing) {
         throw appError(404, 'Listing not found');
@@ -35,6 +35,7 @@ const updateListing = async (listingId, title, description, lostDate) => {
     listing.title = title;
     listing.description = description;
     listing.lostDate = lostDate;
+    listing.active = active;
 
     await listing.save();
     return listing;

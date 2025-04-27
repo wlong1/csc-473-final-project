@@ -47,11 +47,6 @@ router.get('/',
     listingController.getAllListing
 );
 
-router.get('/:listingId',
-    authMiddleware,
-    listingController.getListing
-);
-
 router.post('/',
     authMiddleware,
     authRoles('admin'),
@@ -59,11 +54,15 @@ router.post('/',
     listingController.createListing
 );
 
+router.get('/:listingId',
+    authMiddleware,
+    listingController.getListing
+);
+
 router.put('/:listingId',
     authMiddleware,
     authRoles('admin'),
     listingController.updateListing
 );
-
 
 module.exports = router;

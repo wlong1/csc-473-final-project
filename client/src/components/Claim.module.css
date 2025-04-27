@@ -110,6 +110,15 @@ textarea {
     width: 100%;
 }
 
+.adminEditButton {
+    font-size: 20px;
+    color: #c5d2dd;
+}
+
+.adminEditButton:hover {
+    color: #85a7c7;
+}
+
 .acceptButton {
     background-color: #63806e;
 }
