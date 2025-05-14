@@ -40,6 +40,12 @@ router.put('/claim/:claimId/claimStatus',
     claimController.updateClaimStatus
 );
 
+router.get('/claim/pending',
+    authMiddleware,
+    authRoles('admin'),
+    claimController.getPendingClaims
+);
+
 
 //Listing routes
 router.get('/',

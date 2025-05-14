@@ -20,6 +20,11 @@ const getListingClaim = async (req, res, next) => {
     res.status(200).json(claims);
 };
 
+const getPendingClaims = async (req, res, next) => {
+    const claims = await claimService.getPendingClaims();
+    res.status(200).json(claims);
+};
+
 const createClaim = async (req, res) => {
     const listingId = req.params.listingId;
     if (!listingId) {
@@ -81,9 +86,11 @@ const deleteClaim = async (req, res) => {
     res.status(200).json(claim);
 };
 
+
 module.exports = {
     getUserClaim,
     getListingClaim,
+    getPendingClaims,
     createClaim,
     updateClaimMessage,
     updateClaimStatus,

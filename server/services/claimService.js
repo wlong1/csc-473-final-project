@@ -20,6 +20,26 @@ const getListingClaim = async (listingId) => {
     return claims;
 };
 
+const getPendingClaims = async () => {
+    const claims = await Claim.findAll({
+        where: { 
+            status: 'pending' 
+        },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'username', 'email']
+            },
+            {
+                model: Listing,
+                attributes: ['id', 'title', 'description', 'imageUrl']
+            }
+        ],
+        order: [['createdAt', 'DESC']]
+    });
+    return claims;
+};
+
 const createClaim = async (userId, listingId, message) => {
     const newClaim = await Claim.create({
         userId,
@@ -73,6 +93,7 @@ const deleteClaim = async (claimId) => {
 module.exports = {
     getUserClaim,
     getListingClaim,
+    getPendingClaims,
     createClaim,
     updateClaimMessage,
     updateClaimStatus,

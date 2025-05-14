@@ -135,8 +135,13 @@ export async function getUserClaims() {
       'Authorization': `Bearer ${token}`
     }
   });
+
   const body = await res.json();
-  if (!res.ok) throw new Error(body.message || 'Failed to fetch user claims');
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Failed to fetch user claims');
+  }
+
   return body;
 }
 
@@ -156,6 +161,24 @@ export async function getListingClaim(listingId) {
 
   return body;
 }
+
+export const getPendingClaims = async () => {
+  const token = getAuthToken();
+  const res = await fetch(`${API_URL}/api/listing/claim/pending`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new Error(body.message || 'Failed to fetch pending claims');
+  }
+
+  return body;
+};
+
 
 export async function createClaim(listingId, message) {
   const token = getAuthToken();
