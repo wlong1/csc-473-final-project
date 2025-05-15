@@ -3,7 +3,9 @@ const { appError } = require('../utils/httpError');
 
 
 const getAllListing = async () => {
-    const listings = await Listing.findAll();
+    const listings = await Listing.findAll({
+        order: [['createdAt', 'DESC']]
+    });
     return listings;
 };
 

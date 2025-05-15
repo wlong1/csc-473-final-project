@@ -4,6 +4,7 @@ const { appError } = require('../utils/httpError');
 
 const getUserClaim = async (userId) => {
     const claims = await Claim.findAll({
+        order: [['createdAt', 'DESC']],
         where: { userId },
         include: [{
             model: Listing,
