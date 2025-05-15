@@ -125,6 +125,23 @@
   margin-left: auto;
 }
 
+.createButton {
+  background-color: #6c7681;
+  color: white;
+  border: none;
+  margin: 10px 0px 20px 0;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+	display: block;
+}
+
+.createButton:hover {
+  background-color: #565d66;
+}
+
+.dashboardTitle {
+  margin-bottom:20px;
+}
 
 @media (max-width: 768px) {
   .listingContainer {

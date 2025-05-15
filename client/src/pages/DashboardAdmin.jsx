@@ -17,7 +17,7 @@ export default function DashboardAdmin() {
             return;
         }
         
-        if (getRole() !== 'admin') {
+        if (getRole() != 'admin') {
             navigate('/');
             return;
         }
@@ -68,65 +68,71 @@ export default function DashboardAdmin() {
     }
 
     const ClaimItem = ({ claim }) => (
-        <div className={claimStyles.claimItem}>
-            <div className={`${claimStyles.claimContent} ${claimStyles.claimSpacer}`}>
-                <div className={claimStyles.userInfo}>
-                    <span className={claimStyles.username}>{claim.User.username}</span>
-                    <span className={claimStyles.email}>{claim.User.email}</span>
-                </div>
-                
-                <Link to={`/listing/${claim.listingId}`} className={styles.titleLink}>
+        <Link to={`/listing/${claim.listingId}`}
+                    className={claimStyles.titleLink}
+                    style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className={claimStyles.claimItem}>
+                <div className={`${claimStyles.claimContent} ${claimStyles.claimSpacer}`}>
                     <h3>{claim.Listing.title}</h3>
-                </Link>
+                    <div className={claimStyles.userInfo}>
+                        <span className={claimStyles.username}>{claim.User.username}</span>
+                        <span className={claimStyles.email}>{claim.User.email}</span>
+                    </div>
+                    
+                    <p className={claimStyles.claimText}>{claim.message}</p>
+                    
+                    <div className={claimStyles.claimMeta}>
+                        <span className={claimStyles.claimDate}>
+                            Submitted: {new Date(claim.createdAt).toLocaleDateString()}
+                        </span>
+                        <span className={`${claimStyles.claimStatus} ${
+                            claim.status === 'accepted' ? styles.statusActive : 
+                            claim.status === 'rejected' ? styles.statusInactive : ''
+                        }`}>
+                            {claim.status}
+                        </span>
+                    </div>
+                </div>
                 
-                <p className={claimStyles.claimText}>{claim.message}</p>
-                
-                <div className={claimStyles.claimMeta}>
-                    <span className={claimStyles.claimDate}>
-                        Submitted: {new Date(claim.createdAt).toLocaleDateString()}
-                    </span>
-                    <span className={claimStyles.claimStatus}>
-                        Status: {claim.status}
-                    </span>
+                <div className={claimStyles.adminActions}>
+                    <button
+                        onClick={() => navigate(`/listing/${claim.listingId}`)}
+                        className={`${claimStyles.claimButton} ${styles.viewButton}`}
+                    >
+                        View Listing
+                    </button>
                 </div>
             </div>
-            
-            <div className={claimStyles.adminActions}>
-                <button
-                    onClick={() => navigate(`/listing/${claim.listingId}`)}
-                    className={`${claimStyles.claimButton} ${styles.viewButton}`}
-                >
-                    View Listing
-                </button>
-            </div>
-        </div>
+        </Link>
     );
 
     return (
         <Layout>
             <div className={styles.backgroundWrapper}>
                 <div className={styles.content}>
-                    <h1 className={styles.dashboardTitle}>Admin Dashboard</h1>
-                    <button
-                        onClick={() => navigate('/listing/create')}
-                        className={styles.createButton}
-                    >
-                        Create New Listing
-                    </button>
-                    <h2 className={styles.dashboardSubtitle}>Pending Claims</h2>
-                    {claims.length > 0 ? (
-                        <section className={styles.claimsSection}>
-                            <div className={claimStyles.claimsList}>
-                                {claims.map(claim => (
-                                    <ClaimItem key={claim.id} claim={claim} />
-                                ))}
+                    <div className={claimStyles.claimSection}>
+                        <h1 className={styles.dashboardTitle}>Admin Dashboard</h1>
+                        <button
+                            onClick={() => navigate('/listing/create')}
+                            className={styles.createButton}
+                        >
+                            Create New Listing
+                        </button>
+                        <h2 className={styles.dashboardSubtitle}>Pending Claims</h2>
+                        {claims.length > 0 ? (
+                            <section className={styles.claimsSection}>
+                                <div className={claimStyles.claimsList}>
+                                    {claims.map(claim => (
+                                        <ClaimItem key={claim.id} claim={claim} />
+                                    ))}
+                                </div>
+                            </section>
+                        ) : (
+                            <div className={styles.noClaims}>
+                                <p>No pending claims at this time.</p>
                             </div>
-                        </section>
-                    ) : (
-                        <div className={styles.noClaims}>
-                            <p>No pending claims at this time.</p>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
         </Layout>

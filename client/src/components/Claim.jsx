@@ -154,7 +154,7 @@ export default function ClaimSection({ listingId }) {
             {isAdmin && (
                 <button
                     onClick={() => navigate(`/listing/${listingId}/edit`)}
-                    className={`${styles.adminEditButton} ${styles.button}`}
+                    className={`${styles.adminEditButton} ${styles.claimButton} ${styles.button}`}
                 >
                     Edit Listing
                 </button>

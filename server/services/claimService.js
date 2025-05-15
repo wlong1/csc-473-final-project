@@ -1,11 +1,16 @@
-const { Claim, User } = require('../models');
+const { Claim, User, Listing } = require('../models');
 const { appError } = require('../utils/httpError');
 
 
 const getUserClaim = async (userId) => {
     const claims = await Claim.findAll({
-        where: { userId }
+        where: { userId },
+        include: [{
+            model: Listing,
+            attributes: ['id', 'title']
+            }],
     });
+    console.log(claims);
     return claims;
 };
 
@@ -32,7 +37,7 @@ const getPendingClaims = async () => {
             },
             {
                 model: Listing,
-                attributes: ['id', 'title', 'description', 'imageUrl']
+                attributes: ['id', 'title']
             }
         ],
         order: [['createdAt', 'DESC']]

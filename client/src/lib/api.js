@@ -137,7 +137,6 @@ export async function getUserClaims() {
   });
 
   const body = await res.json();
-
   if (!res.ok) {
     throw new Error(body.message || 'Failed to fetch user claims');
   }

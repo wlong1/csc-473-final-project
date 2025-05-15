@@ -21,7 +21,7 @@ const getListingClaim = async (req, res, next) => {
 };
 
 const getPendingClaims = async (req, res, next) => {
-    const claims = await claimService.getPendingClaims();
+    const claims = await claimController.getPendingClaims();
     res.status(200).json(claims);
 };
 
