@@ -60,6 +60,11 @@ router.post('/',
     listingController.createListing
 );
 
+router.get('/ping',
+    authMiddleware,
+    listingController.ping
+);
+
 router.get('/:listingId',
     authMiddleware,
     listingController.getListing

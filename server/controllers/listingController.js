@@ -53,9 +53,14 @@ const updateListing = async (req, res) => {
     res.status(200).json(listing);
 };
 
+const ping = async (req, res, next) => {
+    res.status(200).json(await listingService.ping());
+};
+
 module.exports = {
     getAllListing,
     getListing,
     createListing,
-    updateListing
+    updateListing,
+    ping
 };
