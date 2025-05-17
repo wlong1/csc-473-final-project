@@ -258,4 +258,33 @@ export async function deleteClaim(claimId) {
 }
 
 
+export function sseListen(eventType, callback) {
+  const es = new EventSource(`${API_URL}/api/listing/updates`);
 
+  es.onerror = () => {
+    console.error('SSE connection error');
+  };
+
+
+  const handler = (e) => {
+    try {
+      callback(JSON.parse(e.data));
+    } catch (err) {
+      console.error('SSE data parsing error:', err);
+    }
+  };
+  es.addEventListener(eventType, handler);
+
+  
+  return () => {
+    es.removeEventListener(eventType, handler);
+    es.close();
+  };
+}
+
+export function listingURLFix(listing) {
+  if (listing.imagePath && !listing.imageUrl) {
+    listing.imageUrl = `${API_URL}/public/uploads/${listing.imagePath}`;
+  }
+  return listing;
+}

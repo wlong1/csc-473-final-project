@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getRole, isAuthenticated } from '../lib/auth';
-import { getAllListings } from '../lib/api';
+import { getAllListings, sseListen, listingURLFix } from '../lib/api';
 import Layout from '../components/Layout';
 import styles from '../styles/Listing.module.css';
 
@@ -37,6 +37,33 @@ export default function Listing() {
 
     fetchListings();
   }, [navigate]);
+
+  //SSE
+  useEffect(() => {
+    if (!isAuthenticated()) return;
+
+    const unsubscribe = sseListen('new_listing', payload => {
+      const item = listingURLFix(payload.listing);
+
+      if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+        new Notification('New Listing', {
+          body: item.title,
+          icon: item.imageUrl || undefined,
+        });
+      }
+
+      setListings(prev => [item, ...prev]);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Notification permission
+  useEffect(() => {
+    if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, []);
 
 	const handleListingClick = (listingId) => {
 		navigate(`/listing/${listingId}`);

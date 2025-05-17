@@ -1,5 +1,6 @@
 const listingService = require('../services/listingService');
 const { appError } = require('../utils/httpError');
+const { sse } = require ('../utils/sse.js');
 
 
 const getAllListing = async (req, res, next) => {
@@ -30,6 +31,15 @@ const createListing = async (req, res) => {
       lostDate,
       imagePath
     );
+
+    const sseReady = await sse; 
+    sseReady.send({
+      event: 'new_listing',
+      listing: {
+        ...listing.get({ plain: true })
+      }
+    }, 'new_listing');
+
     res.status(201).json(listing);
 };
 

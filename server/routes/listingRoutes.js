@@ -4,6 +4,14 @@ const listingController = require('../controllers/listingController');
 const claimController = require('../controllers/claimController');
 const { authMiddleware, authRoles } = require('../middleware/auth');
 const { upload } = require('../config/upload');
+const { sse } = require ('../utils/sse.js');
+
+
+// SSE endpoint
+router.get('/updates', async (req, res, next) => {
+    const sseReady = await sse;
+    sseReady.init(req, res);
+});
 
 
 // Claims routes
