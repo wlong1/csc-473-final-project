@@ -43,16 +43,10 @@ const updateListing = async (listingId, title, description, lostDate, active) =>
     return listing;
 };
 
-const ping = async () => {
-    return await Listing.findOne({
-        order: [['createdAt', 'DESC']]
-    });
-};
 
 module.exports = {
     getAllListing,
     getListing,
     createListing,
-    updateListing,
-    ping
+    updateListing
 };
