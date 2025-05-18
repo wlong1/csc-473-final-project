@@ -23,7 +23,7 @@ Object.keys(models).forEach(modelName => {
 
 
 // Sync
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && process.env.SYNC === 'true') {
     sequelize.sync({ alter: false })
     .then(() => console.log('Database synced'))
     .catch(err => console.error('Error syncing database:', err));

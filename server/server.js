@@ -17,7 +17,7 @@ const corsOptions = {
   origin: process.env.FRONTEND_URL?.split(','),
   credentials: true,
 };
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(helmet());
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 app.use(express.json());
