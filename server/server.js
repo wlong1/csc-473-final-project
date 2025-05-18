@@ -13,8 +13,12 @@ const PORT = process.env.PORT || 5000;
 
 
 // Middleware
+const corsOptions = {
+  origin: process.env.FRONTEND_URL?.split(','),
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(helmet());
-app.use(cors());
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 app.use(express.json());
 
