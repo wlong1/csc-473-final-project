@@ -26,8 +26,13 @@ const UserButtons = ({ onLogout }) => (
   </>
 );
 
+const loseFocus = () => {
+    setMenuOpen(false);
+  };
+
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -42,8 +47,34 @@ export default function Header() {
       <Link to="/" className={styles.title}>
         Lost and Found
       </Link>
-      <nav className={styles.nav}>
-        {isLoggedIn ? <UserButtons onLogout={handleLogout} /> : <AuthButtons />}
+      
+      <button
+        className={styles.hamburger}
+        aria-label="Toggle menu"
+        onClick={() => setMenuOpen(open => !open)}
+      >
+        <span className={menuOpen ? styles.barOpen : styles.bar} />
+        <span className={menuOpen ? styles.barOpen : styles.bar} />
+        <span className={menuOpen ? styles.barOpen : styles.bar} />
+      </button>
+
+      <nav
+        className={`${styles.nav} ${
+          menuOpen ? styles.navOpen : ''
+        }`}
+      >
+        {isLoggedIn ? (
+          <>
+            <Link to="/listing"><button>Listing</button></Link>
+            <Link to="/dashboard"><button>Dashboard</button></Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login"><button>Login</button></Link>
+            <Link to="/register"><button>Register</button></Link>
+          </>
+        )}
       </nav>
     </header>
   );

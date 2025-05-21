@@ -146,3 +146,12 @@ textarea {
     padding-bottom: 2px;
     font-size: 1.6em;
 }
+
+
+@media (max-width: 768px) {
+    .claimSection {
+        width: 100%;
+        margin: 0 auto;
+        padding: 1.5rem;
+    }
+}
