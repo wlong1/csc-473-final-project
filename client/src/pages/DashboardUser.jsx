@@ -32,7 +32,6 @@ export default function DashboardUser() {
             }
         };
         fetchUserClaims();
-        console.log("WAHH")
     }, [navigate]);
 
     if (error) {
